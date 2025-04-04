@@ -5,11 +5,12 @@ export const gender = {
 }
 
 export const roles = {
-    USER: 'user',
-    ADMIN: 'admin'
+    CUSTOMER: 'customer',
+    ADMIN: 'admin',
+    BRAND_OWNER: 'brand owner'
 }
 
 export const otpCodeType = {
     VERIFY_ACCOUNT: 'verifyAccount',
-    RESET_PASSWORD:'resetPassword'
+    RESET_PASSWORD: 'resetPassword'
 }

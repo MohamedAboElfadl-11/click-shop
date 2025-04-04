@@ -39,9 +39,9 @@ const userDatabaseSchema = new mongoose.Schema({
     role: {
         type: String,
         enum: Object.values(constants.roles),
-        default: constants.roles.USER
+        default: constants.roles.CUSTOMER
     },
-    lastLogin: {
+    lastLogin: { // review
         type: Date,
         default: Date.now
     },
