@@ -7,7 +7,7 @@ export const signupSchema = {
         username: Joi.string().alphanum().min(3).max(30).required(),
         firstName: Joi.string().required(),
         lastName: Joi.string().required(),
-        phone: Joi.string().pattern(/^01[0125][0-9]{8}$/).required(),
+        phone: Joi.string().pattern(/^01[0125][0-9]{8}$/),
         password: Joi.string().min(8).max(30).required().pattern(
             /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*])[A-Za-z\d@$!%*]{8,}$/
         ).messages({

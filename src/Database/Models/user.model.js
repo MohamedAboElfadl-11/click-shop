@@ -23,10 +23,10 @@ const userDatabaseSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    phone: {
-        type: String,
-        required: true
-    },
+    // phone: {
+    //     type: String,
+    //     // required: true
+    // },
     password: {
         type: String,
         required: true
@@ -78,13 +78,13 @@ const userDatabaseSchema = new mongoose.Schema({
     timestamps: true
 });
 
-userDatabaseSchema.pre('save', async function () {
-    if (this.isModified('phone')) this.phone = encryption(this.phone, process.env.SECRET_KEY)
+userDatabaseSchema.pre('save', async function async () {
+   // if (this.isModified('phone')) this.phone = await encryption(this.phone, process.env.SECRET_KEY)
     if (this.isModified('password')) this.password = hashing(this.password, +process.env.SALT)
 })
 
 userDatabaseSchema.post('findOne', async function (doc) {
-    if (doc.phone) doc.phone = decryption(doc.phone, process.env.SECRET_KEY);
+    // if (doc.phone) doc.phone = decryption(doc.phone, process.env.SECRET_KEY);
 })
 
 const UserModel = mongoose.models.users || mongoose.model('users', userDatabaseSchema);

@@ -5,8 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start:dev": "SET NODE_ENV=dev&&nodemon"
+    "start:dev": "SET NODE_ENV=dev&&nodemon",
+    "build":"npm i",
+    "start": "node ."
   },
   "keywords": [],
   "author": "",
