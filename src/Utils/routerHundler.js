@@ -10,6 +10,7 @@ const controllerHandler = (app) => {
     app.use('/address', addressRouters)
     app.use('/category', categoryRouters)
     app.use(globalErrorHandler)
+    app.get('/', async (req,res)=> res.status(200).json({message: 'wellcome to click shop'}))
 }
 
 export default controllerHandler
