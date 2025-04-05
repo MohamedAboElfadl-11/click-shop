@@ -38,6 +38,10 @@ const customerDatabaseSchema = new mongoose.Schema({
         enum: Object.values(constants.roles),
         default: constants.roles.CUSTOMER
     },
+    provider: {
+        type: String,
+        enum: Object.values(constants.providers)
+    },
     lastLogin: { // review
         type: Date,
         default: Date.now

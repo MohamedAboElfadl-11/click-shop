@@ -14,3 +14,8 @@ export const otpCodeType = {
     VERIFY_ACCOUNT: 'verifyAccount',
     RESET_PASSWORD: 'resetPassword'
 }
+
+export const providers = {
+    SYSTEM: 'system',
+    GOOGLE: 'google'
+}
