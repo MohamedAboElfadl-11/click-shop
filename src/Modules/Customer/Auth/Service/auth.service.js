@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import UserModel from "../../../../Database/Models/user.model.js";
+import CustomerModel from "../../../../Database/Models/customer.model.js";
 import { emitter } from "../../../../Services/sendEmail.service.js";
 import emailTemplate from "../../../../Templates/sendVirficatioEmail.templets.js";
 import { comparing } from "../../../../Utils/crypto.utils.js";
@@ -12,7 +12,7 @@ import BlackListTokensModel from "../../../../Database/Models/blackListTokens.mo
 // signup service create user account
 export const signupService = async (req, res) => {
     const userDate = req.body;
-    const isUserExist = await UserModel.findOne({
+    const isUserExist = await CustomerModel.findOne({
         $or: [{ email: userDate.email }, { username: userDate.username }]
     });
     if (isUserExist) return res.status(400).json({ message: "user already exist" });
@@ -27,14 +27,14 @@ export const signupService = async (req, res) => {
         to: userDate.email,
         html: emailTemplate(userDate.firstName, otp, `Verify your Account`)
     })
-    await UserModel.create(userDate);
+    await CustomerModel.create(userDate);
     res.status(200).json({ message: 'Account created successfully, please check your mail box to confirm your account' });
 }
 
 // verify user account
 export const verifyAccountService = async (req, res) => {
     const { email, otp } = req.body;
-    const user = await UserModel.findOne({ email });
+    const user = await CustomerModel.findOne({ email });
     if (!user) return res.status(404).json({ message: "user not found" });
     if (user.isAccountConfirmed) return res.status(409).json({ message: "Email already verified" });
 
@@ -55,7 +55,7 @@ export const verifyAccountService = async (req, res) => {
     const isOtpMatch = await comparing(otp, code)
     if (!isOtpMatch) return res.status(409).json({ message: 'invalid otp' })
     if (DateTime.now() > expDate) return res.status(400).json({ message: 'otp has expired' });
-    await UserModel.updateOne(
+    await CustomerModel.updateOne(
         { _id: user._id },
         {
             $set: { isAccountConfirmed: true },
@@ -68,7 +68,7 @@ export const verifyAccountService = async (req, res) => {
 // login service
 export const loginService = async (req, res) => {
     const userCredentials = req.body;
-    const user = await UserModel.findOne({
+    const user = await CustomerModel.findOne({
         $or: [{ email: userCredentials.email }, { username: userCredentials.username }]
     })
     if (!user
@@ -95,7 +95,7 @@ export const loginService = async (req, res) => {
 // forget password
 export const forgetPasswordSeervice = async (req, res) => {
     const { email } = req.body;
-    const user = await UserModel.findOne({ email });
+    const user = await CustomerModel.findOne({ email });
     if (!user) return res.status(404).json({ message: 'user not foun or user not verified' });
     const { otp, hashedOtp, otpExpiration } = genOtp()
     user.userOtps.push({
@@ -115,7 +115,7 @@ export const forgetPasswordSeervice = async (req, res) => {
 // reset password
 export const resetPasswordService = async (req, res) => {
     const { email, otp, password, confirmedPassword } = req.body;
-    const user = await UserModel.findOne({ email });
+    const user = await CustomerModel.findOne({ email });
 
     if (!user) return res.status(404).json({ message: 'user not found' });
 
@@ -136,7 +136,7 @@ export const resetPasswordService = async (req, res) => {
     const isOtpMatch = await comparing(otp, code)
     if (!isOtpMatch) return res.status(409).json({ message: 'invalid otp' })
     if (DateTime.now() > expDate) return res.status(400).json({ message: 'otp has expired' });
-    await UserModel.updateOne(
+    await CustomerModel.updateOne(
         { _id: user._id },
         {
             $pull: { userOtps: { codeType: otpCodeType.RESET_PASSWORD } }

@@ -3,7 +3,7 @@ import * as profile from "./Services/user.service.js";
 import { errorHandlerMiddleware } from "../../../Middlewares/errorHandler.middleware.js";
 import authenticationMiddlware from "../../../Middlewares/authentication.middleware.js";
 import { validationMiddleware } from "../../../Middlewares/validation.middleware.js";
-import * as validators from "../../../Validation/User/Profile/profile.validation.js";
+import * as validators from "../../../Validation/Customer/Profile/profile.validation.js";
 
 const profileRouters = Router();
 

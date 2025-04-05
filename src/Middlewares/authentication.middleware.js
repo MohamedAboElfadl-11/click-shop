@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import BlackListTokensModel from "../Database/Models/blackListTokens.model.js";
-import UserModel from "../Database/Models/user.model.js";
+import UserModel from "../Database/Models/customer.model.js";
 
 const authenticationMiddlware = () => {
     return async (req, res, next) => {

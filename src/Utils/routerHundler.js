@@ -1,8 +1,9 @@
 import { globalErrorHandler } from "../Middlewares/errorHandler.middleware.js"
 import categoryRouters from "../Modules/Admin/Category/category.controller.js"
-import addressRouters from "../Modules/User/Address/address.controller.js"
-import authRouters from "../Modules/User/Auth/auth.controller.js"
-import profileRouters from "../Modules/User/Profile/user.controller.js"
+import addressRouters from "../Modules/Customer/Address/address.controller.js"
+import authRouters from "../Modules/Customer/Auth/auth.controller.js"
+import profileRouters from "../Modules/Customer/Profile/user.controller.js"
+
 
 const controllerHandler = (app) => {
     app.use('/auth', authRouters)
