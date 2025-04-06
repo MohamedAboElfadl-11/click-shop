@@ -37,7 +37,7 @@ authCustomerRouters.get('/genRefreshToken',
 )
 
 authCustomerRouters.get('/logout',
-    errorHandlerMiddleware(authenticationMiddlware()),
+    errorHandlerMiddleware(authenticationMiddlware('customer')),
     errorHandlerMiddleware(auth.logoutService)
 )
 export default authCustomerRouters

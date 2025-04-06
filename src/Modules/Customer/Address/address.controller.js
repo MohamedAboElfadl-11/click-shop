@@ -6,7 +6,7 @@ import addressMiddleware from "../../../Middlewares/Address/address.middeware.js
 
 const addressRouters = Router()
 
-addressRouters.use(errorHandlerMiddleware(authenticationMiddlware()))
+addressRouters.use(errorHandlerMiddleware(authenticationMiddlware('customer')))
 
 addressRouters.post('/add-address',
     errorHandlerMiddleware(address.addAddressServices)

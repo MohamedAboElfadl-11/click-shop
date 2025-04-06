@@ -7,7 +7,7 @@ import * as validators from "../../../Validation/Customer/Profile/profile.valida
 
 const profileRouters = Router();
 
-profileRouters.use(errorHandlerMiddleware(authenticationMiddlware()))
+profileRouters.use(errorHandlerMiddleware(authenticationMiddlware('customer')))
 
 profileRouters.get('/get-profile',
     errorHandlerMiddleware(profile.getProfileService)
