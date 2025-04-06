@@ -1,43 +1,43 @@
 import { Router } from "express";
-import * as auth from "./Service/auth.service.js";
+import * as auth from "./Service/auth.customer.service.js";
 import { errorHandlerMiddleware } from "../../../Middlewares/errorHandler.middleware.js";
 import { validationMiddleware } from "../../../Middlewares/validation.middleware.js";
 import authenticationMiddlware from "../../../Middlewares/authentication.middleware.js";
 import * as  validators from "../../../Validation/Customer/Auth/auth.validation.js";
 
-const authRouters = Router();
+const authCustomerRouters = Router();
 
-authRouters.post('/signup',
+authCustomerRouters.post('/signup',
     validationMiddleware(validators.signupSchema),
     errorHandlerMiddleware(auth.signupService)
 )
 
-authRouters.post('/login',
+authCustomerRouters.post('/login',
     validationMiddleware(validators.loginSchema),
     errorHandlerMiddleware(auth.loginService),
 )
 
-authRouters.post('/verify-account',
+authCustomerRouters.post('/verify-account',
     validationMiddleware(validators.verifyAccountSchema),
     errorHandlerMiddleware(auth.verifyAccountService)
 )
 
-authRouters.post('/forget-password',
+authCustomerRouters.post('/forget-password',
     validationMiddleware(validators.forgetPasswordSchema),
     errorHandlerMiddleware(auth.forgetPasswordSeervice)
 )
 
-authRouters.patch('/reset-password',
+authCustomerRouters.patch('/reset-password',
     validationMiddleware(validators.resetPasswordSchema),
     errorHandlerMiddleware(auth.resetPasswordService)
 )
 
-authRouters.get('/genRefreshToken',
+authCustomerRouters.get('/genRefreshToken',
     errorHandlerMiddleware(auth.refreshTokenService)
 )
 
-authRouters.get('/logout',
+authCustomerRouters.get('/logout',
     errorHandlerMiddleware(authenticationMiddlware()),
     errorHandlerMiddleware(auth.logoutService)
 )
-export default authRouters
+export default authCustomerRouters

@@ -7,6 +7,7 @@ export const gender = {
 export const roles = {
     CUSTOMER: 'customer',
     ADMIN: 'admin',
+    SUPER_ADMIN:'super admin',
     BRAND_OWNER: 'brand owner'
 }
 

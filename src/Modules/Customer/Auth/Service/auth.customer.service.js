@@ -4,10 +4,9 @@ import { emitter } from "../../../../Services/sendEmail.service.js";
 import emailTemplate from "../../../../Templates/sendVirficatioEmail.templets.js";
 import { comparing } from "../../../../Utils/crypto.utils.js";
 import genOtp from "../../../../Utils/genOtp.utils.js";
-import jwt from "jsonwebtoken"
-import { v4 as uuidv4 } from "uuid";
 import { otpCodeType } from "../../../../Constants/constants.js";
 import BlackListTokensModel from "../../../../Database/Models/blackListTokens.model.js";
+import { genAccessToken, genRefreshToken } from "../../../../Utils/genTokens.utils.js";
 
 // signup service create user account
 export const signupService = async (req, res) => {
@@ -71,24 +70,18 @@ export const loginService = async (req, res) => {
     const user = await CustomerModel.findOne({
         $or: [{ email: userCredentials.email }, { username: userCredentials.username }]
     })
+    
     if (!user
         || (user.deletedAt && user.deletedAt <= new Date())
         || (user.bannedAt && user.bannedAt <= new Date())
     ) return res.status(400).json({ message: "wrong email or password" })
+
     const password = await comparing(userCredentials.password, user.password);
     if (!password) return res.status(400).json({ message: "wrong email or password" })
     user.lastLogin = new Date()
     await user.save()
-    const accesstoken = jwt.sign(
-        { _id: user._id, email: user.email },
-        process.env.ACCESS_TOKEN,
-        { expiresIn: '7d', jwtid: uuidv4() }
-    );
-    const refreshtoken = jwt.sign(
-        { _id: user._id, email: user.email },
-        process.env.REFRESH_TOKEN,
-        { expiresIn: '7d', jwtid: uuidv4() }
-    )
+    const accesstoken = genAccessToken(user)
+    const refreshtoken = genRefreshToken(user)
     res.status(200).json({ message: 'Login successfully', tokens: { accesstoken, refreshtoken } })
 }
 

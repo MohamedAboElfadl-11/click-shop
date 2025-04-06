@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === 'dev')
     config({ path: path.resolve('src/Config/.dev.env') });
 config()
 
-const bootstrap = function (){
+const bootstrap = function () {
     const app = express()
     const PORT = process.env.PORT;
     database_connection()

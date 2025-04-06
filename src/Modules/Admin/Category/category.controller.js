@@ -7,11 +7,11 @@ import { roles } from '../../../Constants/constants.js';
 import { validationMiddleware } from '../../../Middlewares/validation.middleware.js';
 import * as validation from '../../../Validation/Admin/category.validation.js';
 
-const { ADMIN } = roles
+const { ADMIN, SUPER_ADMIN } = roles
 const categoryRouters = Router();
 
 categoryRouters.use(errorHandlerMiddleware(authenticationMiddlware()))
-categoryRouters.use(authorizationMiddleware([ADMIN]))
+categoryRouters.use(authorizationMiddleware([ADMIN, SUPER_ADMIN]))
 
 categoryRouters.post('/create',
     validationMiddleware(validation.createCategorySchema),
