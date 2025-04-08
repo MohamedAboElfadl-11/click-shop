@@ -7,6 +7,7 @@ import genOtp from "../../../../Utils/genOtp.utils.js";
 import { otpCodeType } from "../../../../Constants/constants.js";
 import BlackListTokensModel from "../../../../Database/Models/blackListTokens.model.js";
 import { genAccessToken, genRefreshToken } from "../../../../Utils/genTokens.utils.js";
+import jwt from 'jsonwebtoken'
 
 // signup service create user account
 export const signupService = async (req, res) => {
@@ -70,7 +71,7 @@ export const loginService = async (req, res) => {
     const user = await CustomerModel.findOne({
         $or: [{ email: userCredentials.email }, { username: userCredentials.username }]
     })
-    
+
     if (!user
         || (user.deletedAt && user.deletedAt <= new Date())
         || (user.bannedAt && user.bannedAt <= new Date())
@@ -142,19 +143,16 @@ export const resetPasswordService = async (req, res) => {
 
 // refresh token services 
 export const refreshTokenService = async (req, res) => {
+
     const { refreshtoken } = req.headers;
+
     const decodedRefreshToken = jwt.verify(refreshtoken, process.env.REFRESH_TOKEN)
+    console.log(decodedRefreshToken)
     const isRefreshTokenBlacklisted = await BlackListTokensModel.findOne({ tokenId: decodedRefreshToken.jti });
     if (isRefreshTokenBlacklisted) return res.status(400).json({ message: "Token already blacklisted" })
-    const accesstoken = jwt.sign(
-        {
-            _id: decodedRefreshToken._id, email: decodedRefreshToken.email
-        },
-        process.env.ACCESS_TOKEN,
-        {
-            expiresIn: '7d', jwtid: uuidv4()
-        }
-    )
+    
+    const accesstoken = genAccessToken(decodedRefreshToken)
+
     res.status(200).json({ message: "Token refershed successfully", accesstoken });
 }
 
