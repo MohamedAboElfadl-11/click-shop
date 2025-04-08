@@ -108,6 +108,7 @@ export const forgetPasswordSeervice = async (req, res) => {
 
 // reset password
 export const resetPasswordService = async (req, res) => {
+
     const { email, otp, password, confirmedPassword } = req.body;
     const user = await CustomerModel.findOne({ email });
 
@@ -147,10 +148,12 @@ export const refreshTokenService = async (req, res) => {
     const { refreshtoken } = req.headers;
 
     const decodedRefreshToken = jwt.verify(refreshtoken, process.env.REFRESH_TOKEN)
+
     console.log(decodedRefreshToken)
+
     const isRefreshTokenBlacklisted = await BlackListTokensModel.findOne({ tokenId: decodedRefreshToken.jti });
     if (isRefreshTokenBlacklisted) return res.status(400).json({ message: "Token already blacklisted" })
-    
+
     const accesstoken = genAccessToken(decodedRefreshToken)
 
     res.status(200).json({ message: "Token refershed successfully", accesstoken });
