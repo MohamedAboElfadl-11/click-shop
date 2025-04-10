@@ -10,7 +10,7 @@ import * as validation from '../../../Validation/Admin/category.validation.js';
 const { ADMIN, SUPER_ADMIN } = roles
 const categoryRouters = Router();
 
-categoryRouters.use(errorHandlerMiddleware(authenticationMiddlware()))
+categoryRouters.use(errorHandlerMiddleware(authenticationMiddlware("admin")))
 categoryRouters.use(authorizationMiddleware([ADMIN, SUPER_ADMIN]))
 
 categoryRouters.post('/create',
