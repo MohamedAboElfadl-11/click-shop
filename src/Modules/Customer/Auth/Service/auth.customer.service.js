@@ -86,6 +86,48 @@ export const loginService = async (req, res) => {
     res.status(200).json({ message: 'Login successfully', tokens: { accesstoken, refreshtoken } })
 }
 
+// resend otp service
+export const resendOtpService = async (req, res) => {
+    const { email } = req.body;
+
+    const customer = await CustomerModel.findOne({ email });
+    if (!customer) return res.status(404).json({ message: "owner not found" });
+
+    if (customer.isAccountConfirmed) return res.status(409).json({ message: "Email already verified" });
+
+    const otps = customer.userOtps?.filter(item => item.codeType === otpCodeType.VERIFY_ACCOUNT) || [];
+    const latestOtp = otps[otps.length - 1];
+
+    if (
+        latestOtp &&
+        latestOtp.expDate &&
+        DateTime.now() < DateTime.fromJSDate(new Date(latestOtp.expDate))
+    ) {
+        return res.status(400).json({
+            message: "A valid OTP already exists. Please wait until it expires.",
+        });
+    }
+
+    const { otp, hashedOtp, otpExpiration } = genOtp();
+
+    const newOtp = {
+        code: hashedOtp,
+        expDate: otpExpiration,
+        codeType: otpCodeType.VERIFY_ACCOUNT,
+    };
+
+    customer.userOtps.push(newOtp);
+    await customer.save();
+
+    emitter.emit("sendEmail", {
+        subject: "Verify your brand email",
+        to: customer.email,
+        html: emailTemplate(customer.brandName, otp, "Verify your brand email"),
+    });
+
+    res.status(200).json({ message: "New OTP sent successfully" });
+};
+
 // forget password
 export const forgetPasswordSeervice = async (req, res) => {
     const { email } = req.body;

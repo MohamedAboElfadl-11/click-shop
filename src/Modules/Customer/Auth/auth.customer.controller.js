@@ -22,6 +22,10 @@ authCustomerRouters.post('/verify-account',
     errorHandlerMiddleware(auth.verifyAccountService)
 )
 
+authCustomerRouters.post('/resend-otp',
+    errorHandlerMiddleware(auth.resendOtpService)
+)
+
 authCustomerRouters.post('/forget-password',
     validationMiddleware(validators.forgetPasswordSchema),
     errorHandlerMiddleware(auth.forgetPasswordSeervice)

@@ -7,7 +7,8 @@ const customerDatabaseSchema = new mongoose.Schema({
         type: String,
         unique: true,
         required: true,
-        index: true
+        index: true,
+        lowercase: true
     },
     username: { // using in login
         type: String,

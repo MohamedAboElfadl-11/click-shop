@@ -1,6 +1,7 @@
 import { globalErrorHandler } from "../Middlewares/errorHandler.middleware.js"
 import authAdminRouters from "../Modules/Admin/Auth/auth.controller.js"
 import categoryRouters from "../Modules/Admin/Category/category.controller.js"
+import brandOwnerRouters from "../Modules/Brand Owner/Auth/auth.brandowner.controller.js"
 import addressRouters from "../Modules/Customer/Address/address.controller.js"
 import authCustomerRouters from "../Modules/Customer/Auth/auth.customer.controller.js"
 import profileRouters from "../Modules/Customer/Profile/user.controller.js"
@@ -12,6 +13,7 @@ const controllerHandler = (app) => {
     app.use('/customer/address', addressRouters)
     app.use('/admin/category', categoryRouters)
     app.use('/admin/auth', authAdminRouters)
+    app.use('/brand-owner/auth', brandOwnerRouters)
     app.use(globalErrorHandler)
     app.get('/', async (req, res) => res.status(200).json({ message: 'wellcome to click shop' }))
 }
