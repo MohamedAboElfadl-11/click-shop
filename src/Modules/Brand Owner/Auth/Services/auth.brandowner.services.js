@@ -50,9 +50,7 @@ export const verifyAccountService = async (req, res) => {
         return res.status(400).json({ message: 'no otp found' });
     }
 
-    const otps = owner.brandOtps
-        .filter(item => item.codeType === otpCodeType.VERIFY_ACCOUNT)
-        .sort((a, b) => b.createdAt - a.createdAt);
+    const otps = owner.brandOtps.filter(item => item.codeType === otpCodeType.VERIFY_ACCOUNT)
 
     const latestOtp = otps[otps.length - 1];
     if (!latestOtp) {
@@ -130,4 +128,71 @@ export const resendOtpService = async (req, res) => {
     });
 
     res.status(200).json({ message: "New OTP sent successfully" });
+};
+
+// forget password
+export const forgetPasswordService = async (req, res) => {
+    const { email } = req.body;
+
+    const owner = await BrandOwnerModel.findOne({ email });
+    if (!owner) return res.status(404).json({ message: 'owner not found' });
+
+    const { otp, hashedOtp, otpExpiration } = genOtp();
+
+    owner.brandOtps.push({
+        code: hashedOtp,
+        expDate: otpExpiration,
+        codeType: otpCodeType.RESET_PASSWORD,
+    });
+
+    emitter.emit('sendEmail', {
+        subject: "Reset code",
+        to: owner.email,
+        html: emailTemplate(owner.brandName, otp, `Reset your password`),
+    });
+
+    await owner.save();
+
+    res.status(200).json({ message: 'OTP was sent successfully' });
+};
+
+// reset password
+export const resetPasswordService = async (req, res) => {
+    const { email, otp, password, confirmedPassword } = req.body;
+
+    const owner = await BrandOwnerModel.findOne({ email });
+    if (!owner) return res.status(404).json({ message: 'owner not found' });
+
+    if (!owner.brandOtps || owner.brandOtps.length === 0) {
+        return res.status(400).json({ message: 'No OTP found' });
+    }
+
+    const otps = owner.brandOtps.filter(
+        item => item.codeType === otpCodeType.RESET_PASSWORD
+    );
+
+    const latestOtp = otps[otps.length - 1];
+    if (!latestOtp) {
+        return res.status(409).json({ message: "Invalid OTP" });
+    }
+
+    const { code, expDate } = latestOtp;
+
+    const isOtpMatch = await comparing(otp, code);
+    if (!isOtpMatch) {
+        return res.status(409).json({ message: 'Invalid OTP' });
+    }
+
+    if (DateTime.now() > DateTime.fromJSDate(new Date(expDate))) {
+        return res.status(400).json({ message: 'OTP has expired' });
+    }
+
+    owner.brandOtps = owner.brandOtps.filter(
+        item => item.codeType !== otpCodeType.RESET_PASSWORD
+    );
+
+    owner.password = password;
+    await owner.save();
+
+    res.status(200).json({ message: 'Password reset successfully' });
 };

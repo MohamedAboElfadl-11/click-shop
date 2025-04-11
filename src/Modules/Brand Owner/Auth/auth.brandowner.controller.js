@@ -6,20 +6,39 @@ import { validationMiddleware } from "../../../Middlewares/validation.middleware
 
 const brandOwnerRouters = Router()
 
+// brand owner signup services
 brandOwnerRouters.post('/signup',
     validationMiddleware(validation.brandOwnerSignupSchema),
     errorHandlerMiddleware(auth.brandOwnerSignUpService)
 )
 
+// brand owner login 
 brandOwnerRouters.post('/login',
+    validationMiddleware(validation.brandOwnerLoginSchema),
     errorHandlerMiddleware(auth.brandOwnerLoginService)
 )
 
+// verify user account
 brandOwnerRouters.patch('/verify-email',
+    validationMiddleware(validation.verifyAccountSchema),
     errorHandlerMiddleware(auth.verifyAccountService)
 )
 
+// resend otp service
 brandOwnerRouters.post('/resend-otp',
+    validationMiddleware(validation.resendOtpSchema),
     errorHandlerMiddleware(auth.resendOtpService)
+)
+
+// forget password
+brandOwnerRouters.post('/forget-password',
+    validationMiddleware(validation.forgetPasswordSchema),
+    errorHandlerMiddleware(auth.forgetPasswordService)
+)
+
+// reset password
+brandOwnerRouters.patch('/reset-password',
+    validationMiddleware(validation.resetPasswordSchema),
+    errorHandlerMiddleware(auth.resetPasswordService)
 )
 export default brandOwnerRouters;
