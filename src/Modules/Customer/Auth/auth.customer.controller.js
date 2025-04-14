@@ -5,43 +5,43 @@ import { validationMiddleware } from "../../../Middlewares/validation.middleware
 import authenticationMiddlware from "../../../Middlewares/authentication.middleware.js";
 import * as  validators from "../../../Validation/Customer/Auth/auth.validation.js";
 
-const authCustomerRouters = Router();
+const customerAuthRouters = Router();
 
-authCustomerRouters.post('/signup',
+customerAuthRouters.post('/signup',
     validationMiddleware(validators.signupSchema),
     errorHandlerMiddleware(auth.signupService)
 )
 
-authCustomerRouters.post('/login',
+customerAuthRouters.post('/login',
     validationMiddleware(validators.loginSchema),
     errorHandlerMiddleware(auth.loginService),
 )
 
-authCustomerRouters.post('/verify-account',
+customerAuthRouters.post('/verify-account',
     validationMiddleware(validators.verifyAccountSchema),
     errorHandlerMiddleware(auth.verifyAccountService)
 )
 
-authCustomerRouters.post('/resend-otp',
+customerAuthRouters.post('/resend-otp',
     errorHandlerMiddleware(auth.resendOtpService)
 )
 
-authCustomerRouters.post('/forget-password',
+customerAuthRouters.post('/forget-password',
     validationMiddleware(validators.forgetPasswordSchema),
     errorHandlerMiddleware(auth.forgetPasswordSeervice)
 )
 
-authCustomerRouters.patch('/reset-password',
+customerAuthRouters.patch('/reset-password',
     validationMiddleware(validators.resetPasswordSchema),
     errorHandlerMiddleware(auth.resetPasswordService)
 )
 
-authCustomerRouters.get('/genRefreshToken',
+customerAuthRouters.get('/genRefreshToken',
     errorHandlerMiddleware(auth.refreshTokenService)
 )
 
-authCustomerRouters.get('/logout',
+customerAuthRouters.get('/logout',
     errorHandlerMiddleware(authenticationMiddlware('customer')),
     errorHandlerMiddleware(auth.logoutService)
 )
-export default authCustomerRouters
+export default customerAuthRouters

@@ -4,31 +4,31 @@ import authenticationMiddlware from "../../../Middlewares/authentication.middlew
 import * as address from "./Services/address.service.js";
 import addressMiddleware from "../../../Middlewares/Address/address.middeware.js";
 
-const addressRouters = Router()
+const customerAddressRouters = Router()
 
-addressRouters.use(errorHandlerMiddleware(authenticationMiddlware('customer')))
+customerAddressRouters.use(errorHandlerMiddleware(authenticationMiddlware('customer')))
 
-addressRouters.post('/add-address',
+customerAddressRouters.post('/add-address',
     errorHandlerMiddleware(address.addAddressServices)
 )
 
-addressRouters.get('/get-all-addresses',
+customerAddressRouters.get('/get-all-addresses',
     errorHandlerMiddleware(address.getAllAddresses)
 )
 
-addressRouters.get('/get-address/:addressId',
+customerAddressRouters.get('/get-address/:addressId',
     errorHandlerMiddleware(addressMiddleware()),
     errorHandlerMiddleware(address.getAddress)
 )
 
-addressRouters.patch('/update-address/:addressId',
+customerAddressRouters.patch('/update-address/:addressId',
     errorHandlerMiddleware(addressMiddleware()),
     errorHandlerMiddleware(address.updateAddress)
 )
 
-addressRouters.delete('/delete-address/:addressId',
+customerAddressRouters.delete('/delete-address/:addressId',
     errorHandlerMiddleware(addressMiddleware()),
     errorHandlerMiddleware(address.deleteAddress)
 )
 
-export default addressRouters
+export default customerAddressRouters

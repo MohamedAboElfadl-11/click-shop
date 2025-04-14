@@ -5,25 +5,25 @@ import authenticationMiddlware from "../../../Middlewares/authentication.middlew
 import { validationMiddleware } from "../../../Middlewares/validation.middleware.js";
 import * as validators from "../../../Validation/Customer/Profile/profile.validation.js";
 
-const profileRouters = Router();
+const customerProfileRouters = Router();
 
-profileRouters.use(errorHandlerMiddleware(authenticationMiddlware('customer')))
+customerProfileRouters.use(errorHandlerMiddleware(authenticationMiddlware('customer')))
 
-profileRouters.get('/get-profile',
+customerProfileRouters.get('/get-profile',
     errorHandlerMiddleware(profile.getProfileService)
 )
 
-profileRouters.patch('/update-profile',
+customerProfileRouters.patch('/update-profile',
     validationMiddleware(validators.updateProfileSchema),
     errorHandlerMiddleware(profile.updateProfileService)
 )
 
-profileRouters.patch('/change-password',
+customerProfileRouters.patch('/change-password',
     errorHandlerMiddleware(profile.changePasswordService)
 )
 
-profileRouters.delete('/delete-account',
+customerProfileRouters.delete('/delete-account',
     errorHandlerMiddleware(profile.deleteAccountService)
 )
 
-export default profileRouters;
+export default customerProfileRouters;

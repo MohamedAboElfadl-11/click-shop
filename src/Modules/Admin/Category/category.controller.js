@@ -8,33 +8,33 @@ import { validationMiddleware } from '../../../Middlewares/validation.middleware
 import * as validation from '../../../Validation/Admin/category.validation.js';
 
 const { ADMIN, SUPER_ADMIN } = roles
-const categoryRouters = Router();
+const adminCategoryRouters = Router();
 
-categoryRouters.use(errorHandlerMiddleware(authenticationMiddlware("admin")))
-categoryRouters.use(authorizationMiddleware([ADMIN, SUPER_ADMIN]))
+adminCategoryRouters.use(errorHandlerMiddleware(authenticationMiddlware("admin")))
+adminCategoryRouters.use(authorizationMiddleware([ADMIN, SUPER_ADMIN]))
 
-categoryRouters.post('/create',
+adminCategoryRouters.post('/create',
     validationMiddleware(validation.createCategorySchema),
     errorHandlerMiddleware(category.createCategoryService)
 )
 
-categoryRouters.patch('/update/:categoryId',
+adminCategoryRouters.patch('/update/:categoryId',
     validationMiddleware(validation.updateCategorySchema),
     errorHandlerMiddleware(category.updateCategoryService)
 )
 
-categoryRouters.get('/all-categories',
+adminCategoryRouters.get('/all-categories',
     errorHandlerMiddleware(category.allCategoriesService)
 )
 
-categoryRouters.get('/search/:categoryId',
+adminCategoryRouters.get('/search/:categoryId',
     validationMiddleware(validation.searchCategorySchema),
     errorHandlerMiddleware(category.searchCategoryService)
 )
 
-categoryRouters.delete('/delete/:categoryId',
+adminCategoryRouters.delete('/delete/:categoryId',
     validationMiddleware(validation.deleteCategorySchema),
     errorHandlerMiddleware(category.deleteCategoryService)
 )
 
-export default categoryRouters
+export default adminCategoryRouters
