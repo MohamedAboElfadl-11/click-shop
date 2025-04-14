@@ -1,5 +1,5 @@
 import Joi from 'joi'
-import { gender } from '../../../Constants/constants.js'
+import { gender } from '../../Constants/constants.js'
 
 export const updateProfileSchema = {
     body: Joi.object({

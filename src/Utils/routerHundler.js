@@ -7,10 +7,12 @@ import customerProfileRouters from "../Modules/Profiles/user.controller.js"
 
 
 const controllerHandler = (app) => {
+    
     // Customer Routers
     app.use('/customer/auth', customerAuthRouters)
     app.use('/customer/profile', customerProfileRouters)
     app.use('/customer/address', customerAddressRouters)
+
     // Admin Routers
     app.use('/admin/category', adminCategoryRouters)
     app.use('/admin/auth', authAdminRouters)

@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import * as validation from '../../Validation/Admin/category.validation.js';
+import * as validation from '../../Validation/Category/category.validation.js';
 import * as category from './Service/category.service.js';
 import { errorHandlerMiddleware } from '../../Middlewares/errorHandler.middleware.js';
 import { authorizationMiddleware } from '../../Middlewares/authorization.middleware.js';

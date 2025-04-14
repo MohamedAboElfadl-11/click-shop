@@ -3,7 +3,7 @@ import * as auth from "./Service/auth.customer.service.js";
 import { errorHandlerMiddleware } from "../../../Middlewares/errorHandler.middleware.js";
 import { validationMiddleware } from "../../../Middlewares/validation.middleware.js";
 import authenticationMiddlware from "../../../Middlewares/authentication.middleware.js";
-import * as  validators from "../../../Validation/Customer/Auth/auth.validation.js";
+import * as  validators from "../../../Validation/Auth/auth.validation.js";
 
 const customerAuthRouters = Router();
 
