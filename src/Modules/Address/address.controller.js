@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { errorHandlerMiddleware } from "../../../Middlewares/errorHandler.middleware.js";
-import authenticationMiddlware from "../../../Middlewares/authentication.middleware.js";
 import * as address from "./Services/address.service.js";
-import addressMiddleware from "../../../Middlewares/Address/address.middeware.js";
+import { errorHandlerMiddleware } from "../../Middlewares/errorHandler.middleware.js";
+import authenticationMiddlware from "../../Middlewares/authentication.middleware.js";
+import addressMiddleware from "../../Middlewares/address.middeware.js";
 
 const customerAddressRouters = Router()
 

@@ -1,4 +1,4 @@
-import AddressModel from "../../Database/Models/address.model.js";
+import AddressModel from "../Database/Models/address.model.js";
 
 const addressMiddleware = () => {
     return async (req, res, next) => {

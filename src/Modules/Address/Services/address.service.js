@@ -1,4 +1,4 @@
-import AddressModel from "../../../../Database/Models/address.model.js";
+import AddressModel from "../../../Database/Models/address.model.js";
 
 // create address
 export const addAddressServices = async (req, res) => {

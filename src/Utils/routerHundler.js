@@ -1,12 +1,12 @@
 import { globalErrorHandler } from "../Middlewares/errorHandler.middleware.js"
-import authAdminRouters from "../Modules/Admin/Auth/auth.controller.js"
+import customerAddressRouters from "../Modules/Address/address.controller.js"
 import manageBrandsRouters from "../Modules/Admin/Brand/brand.admin.controller.js"
 import adminCategoryRouters from "../Modules/Admin/Category/category.controller.js"
-import brandOwnerAuthRouters from "../Modules/Brand Owner/Auth/auth.brandowner.controller.js"
-import brandProfileRouters from "../Modules/Brand Owner/Brand Profile/profile.controller.js"
-import customerAddressRouters from "../Modules/Customer/Address/address.controller.js"
-import customerAuthRouters from "../Modules/Customer/Auth/auth.customer.controller.js"
-import customerProfileRouters from "../Modules/Customer/Profile/user.controller.js"
+import authAdminRouters from "../Modules/Auth/Admin/auth.controller.js"
+import brandOwnerAuthRouters from "../Modules/Auth/Brand Owner/auth.brandowner.controller.js"
+import customerAuthRouters from "../Modules/Auth/Customer/auth.customer.controller.js"
+import brandProfileRouters from "../Modules/Profiles/Brand/profile.controller.js"
+import customerProfileRouters from "../Modules/Profiles/Customer/user.controller.js"
 
 
 const controllerHandler = (app) => {
