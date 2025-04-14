@@ -1,9 +1,9 @@
 import { Router } from "express";
-import * as profile from "../../Profiles/Customer/Services/user.service.js";
-import { errorHandlerMiddleware } from "../../../Middlewares/errorHandler.middleware.js";
-import authenticationMiddlware from "../../../Middlewares/authentication.middleware.js";
-import { validationMiddleware } from "../../../Middlewares/validation.middleware.js";
-import * as validators from "../../../Validation/Customer/Profile/profile.validation.js";
+import * as profile from "./Services/user.service.js";
+import { errorHandlerMiddleware } from "../../Middlewares/errorHandler.middleware.js";
+import authenticationMiddlware from "../../Middlewares/authentication.middleware.js";
+import { validationMiddleware } from "../../Middlewares/validation.middleware.js";
+import * as validators from "../../Validation/Customer/Profile/profile.validation.js";
 
 const customerProfileRouters = Router();
 

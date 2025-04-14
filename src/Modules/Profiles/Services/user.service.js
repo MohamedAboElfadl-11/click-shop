@@ -1,4 +1,4 @@
-import { comparing } from "../../../../Utils/crypto.utils.js";
+import { comparing } from "../../../Utils/crypto.utils.js";
 
 // get profile service
 export const getProfileService = async (req, res) => {

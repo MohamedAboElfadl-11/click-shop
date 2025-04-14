@@ -23,10 +23,7 @@ const productDatabaseSchema = new mongoose.Schema({
         required: true,
         ref: 'categories'
     },
-    brand: {
-        type: String,
-        required: true
-    },
+    
     rating: {
         type: Number,
         default: 0

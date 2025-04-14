@@ -2,12 +2,10 @@ import jwt from "jsonwebtoken";
 import BlackListTokensModel from "../Database/Models/blackListTokens.model.js";
 import CustomerModel from "../Database/Models/customer.model.js";
 import AdminModel from "../Database/Models/admin.model.js";
-import BrandOwnerModel from "../Database/Models/brand-owner.model.js";
 
 const modelType = {
     admin: AdminModel,
     customer: CustomerModel,
-    brandOwner : BrandOwnerModel
 }
 
 const authenticationMiddlware = (modelName) => {

@@ -1,17 +1,17 @@
 import { Router } from 'express'
+import * as validation from '../../Validation/Admin/category.validation.js';
 import * as category from './Service/category.service.js';
-import { errorHandlerMiddleware } from '../../../Middlewares/errorHandler.middleware.js';
-import authenticationMiddlware from '../../../Middlewares/authentication.middleware.js';
-import { authorizationMiddleware } from '../../../Middlewares/authorization.middleware.js';
-import { roles } from '../../../Constants/constants.js';
-import { validationMiddleware } from '../../../Middlewares/validation.middleware.js';
-import * as validation from '../../../Validation/Admin/category.validation.js';
+import { errorHandlerMiddleware } from '../../Middlewares/errorHandler.middleware.js';
+import { authorizationMiddleware } from '../../Middlewares/authorization.middleware.js';
+import authenticationMiddlware from '../../Middlewares/authentication.middleware.js';
+import { validationMiddleware } from '../../Middlewares/validation.middleware.js';
+import { roles } from '../../Constants/constants.js';
 
-const { ADMIN, SUPER_ADMIN } = roles
+const { ADMIN } = roles
 const adminCategoryRouters = Router();
 
 adminCategoryRouters.use(errorHandlerMiddleware(authenticationMiddlware("admin")))
-adminCategoryRouters.use(authorizationMiddleware([ADMIN, SUPER_ADMIN]))
+adminCategoryRouters.use(authorizationMiddleware([ADMIN]))
 
 adminCategoryRouters.post('/create',
     validationMiddleware(validation.createCategorySchema),
