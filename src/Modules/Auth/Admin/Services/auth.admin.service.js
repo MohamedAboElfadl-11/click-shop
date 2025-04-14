@@ -1,7 +1,7 @@
 import AdminModel from "../../../../Database/Models/admin.model.js";
 import { comparing } from "../../../../Utils/crypto.utils.js";
 import { genAccessToken, genRefreshToken } from "../../../../Utils/genTokens.utils.js";
-import logger from "../../../../Utils/logger.utils.js";
+// import logger from "../../../../Utils/logger.utils.js";
 
 // admin login service
 export const loginAdminService = async (req, res) => {
@@ -13,7 +13,7 @@ export const loginAdminService = async (req, res) => {
     const password = await comparing(loginData.password, admin.password)
     if (!password) return res.status({ message: 'wrong email or password' })
     
-    logger.info(`Login attempt for email: ${admin.email}`);
+    // logger.info(`Login attempt for email: ${admin.email}`);
 
     const accesstoken = genAccessToken(admin)
     const refreshtoken = genRefreshToken(admin)

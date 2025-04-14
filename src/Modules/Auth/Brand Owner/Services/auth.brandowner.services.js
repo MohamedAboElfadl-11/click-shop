@@ -6,17 +6,17 @@ import emailTemplate from "../../../../Templates/sendVirficatioEmail.templets.js
 import { comparing } from "../../../../Utils/crypto.utils.js";
 import genOtp from "../../../../Utils/genOtp.utils.js";
 import { genAccessToken, genRefreshToken } from "../../../../Utils/genTokens.utils.js";
-import logger from "../../../../Utils/logger.utils.js";
+// import logger from "../../../../Utils/logger.utils.js";
 
 // brand owner signup services
 export const brandOwnerSignUpService = async (req, res) => {
     const ownerData = req.body;
 
-    logger.info(`Signup attempt for email: ${ownerData.email}`);
+    // logger.info(`Signup attempt for email: ${ownerData.email}`);
 
     const isEmailExist = await BrandOwnerModel.findOne({ email: ownerData.email })
     if (isEmailExist) {
-        logger.warn(`Signup failed - Email already exists: ${ownerData.email}`);
+        // logger.warn(`Signup failed - Email already exists: ${ownerData.email}`);
         return res.status(409).json({ message: 'email already exist' });
     }
 
