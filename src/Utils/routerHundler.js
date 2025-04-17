@@ -1,3 +1,4 @@
+import ProductModel from "../Database/Models/product.model.js"
 import { globalErrorHandler } from "../Middlewares/errorHandler.middleware.js"
 import customerAddressRouters from "../Modules/Address/address.controller.js"
 import authAdminRouters from "../Modules/Auth/Admin/auth.controller.js"
@@ -6,7 +7,12 @@ import adminCategoryRouters from "../Modules/Category/category.controller.js"
 import productRouters from "../Modules/Products/products.controller.js"
 import customerProfileRouters from "../Modules/Profiles/user.controller.js"
 
-const controllerHandler = (app) => {
+
+
+const controllerHandler = async (app) => {
+
+    const products = await ProductModel.find();
+    if (!products) return res.status(404).json({ message: 'No products avalibale' })
 
     // Customer Routers
     app.use('/customer/auth', customerAuthRouters)
@@ -17,12 +23,8 @@ const controllerHandler = (app) => {
     app.use('/admin/category', adminCategoryRouters)
     app.use('/admin/auth', authAdminRouters)
     app.use('/admin/product', productRouters)
-    app.get('/', async (req, res) => {
-        const products = await ProductModel.find();
-        if (!products) return res.status(404).json({ message: 'No products avalibale' })
-        res.status(200).json({ products })
-    })
     app.use(globalErrorHandler)
+    app.get('/home', async (req, res) => res.status(200).json({ message: 'wellcome to click shop', products }))
 }
 
 export default controllerHandler
