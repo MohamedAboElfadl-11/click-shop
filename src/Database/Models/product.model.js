@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const productDatabaseSchema = new mongoose.Schema({
     name: {
         type: String,
+        unique: true,
         required: true
     },
     description: {
@@ -23,11 +24,13 @@ const productDatabaseSchema = new mongoose.Schema({
         required: true,
         ref: 'categories'
     },
-    
     rating: {
         type: Number,
         default: 0
     },
+
+    brand: String,
+
 }, {
     timestamps: true
 });
