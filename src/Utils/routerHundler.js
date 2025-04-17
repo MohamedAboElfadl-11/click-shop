@@ -22,12 +22,13 @@ const controllerHandler = (app) => {
     app.use('/admin/product', productRouters)
 
     // Home Routers
-    app.get('/home', async (req, res) => {
+    app.get('/', async (req, res) => {
         const products = await ProductModel.find();
         if (!products.length) return res.status(404).json({ message: 'No products available' })
         
         res.status(200).json({ message: 'welcome to click shop', products })
     })
+    
     app.use(globalErrorHandler)
 }
 
