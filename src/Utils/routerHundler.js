@@ -13,7 +13,6 @@ const controllerHandler = async (app) => {
 
     const products = await ProductModel.find();
     if (!products) return res.status(404).json({ message: 'No products avalibale' })
-
     // Customer Routers
     app.use('/customer/auth', customerAuthRouters)
     app.use('/customer/profile', customerProfileRouters)
