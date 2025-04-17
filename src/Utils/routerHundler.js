@@ -9,10 +9,8 @@ import customerProfileRouters from "../Modules/Profiles/user.controller.js"
 
 
 
-const controllerHandler = async (app) => {
+const controllerHandler = (app) => {
 
-    const products = await ProductModel.find();
-    if (!products) return res.status(404).json({ message: 'No products avalibale' })
     // Customer Routers
     app.use('/customer/auth', customerAuthRouters)
     app.use('/customer/profile', customerProfileRouters)
@@ -22,13 +20,17 @@ const controllerHandler = async (app) => {
     app.use('/admin/category', adminCategoryRouters)
     app.use('/admin/auth', authAdminRouters)
     app.use('/admin/product', productRouters)
+
+    // Home Routers
+    app.get('/home', async (req, res) => {
+        const products = await ProductModel.find();
+        if (!products.length) return res.status(404).json({ message: 'No products available' })
+        
+        res.status(200).json({ message: 'welcome to click shop', products })
+    })
     app.use(globalErrorHandler)
-    app.get('/home', async (req, res) => res.status(200).json({ message: 'wellcome to click shop', products }))
 }
 
 export default controllerHandler
 
-// productRouters.get('/get-products',
-//     errorHandlerMiddleware(product.getAllProductService)
-// )
 

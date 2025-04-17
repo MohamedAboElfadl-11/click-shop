@@ -9,10 +9,6 @@ const productRouters = Router();
 
 const {ADMIN} = roles 
 
-productRouters.get('/get-products',
-    errorHandlerMiddleware(product.getAllProductService)
-)
-
 productRouters.use(errorHandlerMiddleware(authenticationMiddlware('admin')))
 productRouters.use(authorizationMiddleware([ADMIN]))
 
