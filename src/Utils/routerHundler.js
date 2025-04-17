@@ -17,12 +17,12 @@ const controllerHandler = (app) => {
     app.use('/admin/category', adminCategoryRouters)
     app.use('/admin/auth', authAdminRouters)
     app.use('/admin/product', productRouters)
-    app.use(globalErrorHandler)
-    app.get('/home', async (req, res) => {
+    app.get('/', async (req, res) => {
         const products = await ProductModel.find();
         if (!products) return res.status(404).json({ message: 'No products avalibale' })
         res.status(200).json({ products })
     })
+    app.use(globalErrorHandler)
 }
 
 export default controllerHandler
