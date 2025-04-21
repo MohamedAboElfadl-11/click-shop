@@ -32,6 +32,10 @@ const productDatabaseSchema = new mongoose.Schema({
         secure_url: String,
         public_id: String
     }],
+    slug: {
+        type: String,
+        unique: true
+    },
 
     brand: String,
 

@@ -63,9 +63,13 @@ export const changePasswordService = async (req, res) => {
 
 // delete account service
 export const deleteAccountService = async (req, res) => {
+
     const user = req.loginUser;
+    
     user.deletedAt = new Date();
+    
     await user.save();
+    
     res.status(200).json({ message: 'account deleted successfully' })
 }
 

@@ -1,7 +1,8 @@
 import { cloudinary } from "../../../Config/cloudinary.config.js";
 import ProductModel from "../../../Database/Models/product.model.js";
+import slugify from "slugify";
 
-// add product to brand store
+// add product to store
 export const addProductService = async (req, res) => {
 
     const productData = req.body;
@@ -12,31 +13,26 @@ export const addProductService = async (req, res) => {
 
     if (isProductNameExist) return res.status(409).json({ message: 'Product already exist' })
 
-    // if (!file) return res.status(400).json({ message: "images is required" })
-
-    // const { secure_url, public_id } = await cloudinary().uploader.upload(
-    //     file.path,
-    //     {
-    //         folder: `${process.env.CLOUDINARY_FOLDER}/Products`,
-    //         resource_type: 'image'
-    //     }
-    // )
-
-    // productData.image = { secure_url, public_id }
-
     if (!files || files.length === 0) return res.status(400).json({ message: "Images are required" })
 
     const images = [];
 
     for (const file of files) {
-        const { secure_url, public_id } = await cloudinary().uploader.upload(file.path, {
-            folder: `${process.env.CLOUDINARY_FOLDER}/Products`,
-            resource_type: 'image'
-        });
+        const { secure_url, public_id } = await cloudinary().uploader.upload(
+
+            file.path,
+            {
+                folder: `${process.env.CLOUDINARY_FOLDER}/Products`,
+                resource_type: 'image'
+            }
+        );
+
         images.push({ secure_url, public_id });
     }
 
     productData.image = images;
+
+    productData.slug = slugify(productData.name, { lower: true });
 
     await ProductModel.create(productData)
     res.status(201).json({ message: 'product added successfully' });
@@ -77,13 +73,23 @@ export const updateProductService = async (req, res) => {
     res.status(200).json({ message: 'product updated successfully', updatedProduct })
 }
 
-// search by name
-export const searchByName = async (req, res) => {
+// delete product 
+export const deleteProductService = async (req, res) => {
 
-    const { productname } = req.query;
+    const { productID } = req.params;
 
-    const product = await ProductModel.findOne({ name: productname })
+    const product = await ProductModel.findById(productID)
+
     if (!product) return res.status(404).json({ message: 'product not found' })
 
-    res.status(200).json({ product })
+    if (product.image && product.image.length > 0) {
+        for (const img of product.image) {
+            await cloudinary().uploader.destroy(img.public_id);
+        }
+    }
+
+    await ProductModel.deleteOne({ _id: productID })
+
+    res.status(200).json({ message: 'product deleted successfully' })
+
 }

@@ -4,6 +4,7 @@ import customerAddressRouters from "../Modules/Address/address.controller.js"
 import authAdminRouters from "../Modules/Auth/Admin/auth.controller.js"
 import customerAuthRouters from "../Modules/Auth/Customer/auth.customer.controller.js"
 import adminCategoryRouters from "../Modules/Category/category.controller.js"
+import homeRouters from "../Modules/Home/home.controller.js"
 import productRouters from "../Modules/Products/products.controller.js"
 import customerProfileRouters from "../Modules/Profiles/user.controller.js"
 
@@ -28,6 +29,8 @@ const controllerHandler = (app) => {
         
         res.status(200).json({ message: 'welcome to click shop', products })
     })
+
+    app.use('/home', homeRouters)
     
     app.use(globalErrorHandler)
 }
