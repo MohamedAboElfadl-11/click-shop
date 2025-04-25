@@ -16,17 +16,17 @@ customerAddressRouters.get('/get-all-addresses',
     errorHandlerMiddleware(address.getAllAddresses)
 )
 
-customerAddressRouters.get('/get-address/:addressId',
+customerAddressRouters.get('/get-address',
     errorHandlerMiddleware(addressMiddleware()),
     errorHandlerMiddleware(address.getAddress)
 )
 
-customerAddressRouters.patch('/update-address/:addressId',
+customerAddressRouters.patch('/update-address',
     errorHandlerMiddleware(addressMiddleware()),
     errorHandlerMiddleware(address.updateAddress)
 )
 
-customerAddressRouters.delete('/delete-address/:addressId',
+customerAddressRouters.delete('/delete-address',
     errorHandlerMiddleware(addressMiddleware()),
     errorHandlerMiddleware(address.deleteAddress)
 )

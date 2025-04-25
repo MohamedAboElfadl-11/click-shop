@@ -5,10 +5,6 @@ const addressDatabaseSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    town: {
-        type: String,
-        required: true
-    },
     city: {
         type: String,
         required: true

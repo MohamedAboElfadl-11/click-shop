@@ -6,6 +6,7 @@ import customerAuthRouters from "../Modules/Auth/Customer/auth.customer.controll
 import cartRouters from "../Modules/Cart/cart.controller.js"
 import adminCategoryRouters from "../Modules/Category/category.controller.js"
 import homeRouters from "../Modules/Home/home.controller.js"
+import orderRouters from "../Modules/Order/order.controller.js"
 import productRouters from "../Modules/Products/products.controller.js"
 import customerProfileRouters from "../Modules/Profiles/user.controller.js"
 
@@ -34,6 +35,9 @@ const controllerHandler = (app) => {
 
     // Cart Routers
     app.use('/cart', cartRouters)
+
+    // Order Routers
+    app.use('/order', orderRouters)
 
     
     app.use(globalErrorHandler)

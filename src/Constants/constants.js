@@ -20,3 +20,22 @@ export const providers = {
 }
 
 export const imageExtentions = ['image/jpeg', 'image/png', 'application/pdf']
+
+export const paymentMethod = {
+    COD: 'cash on delivery',
+    ONLINE: 'online'
+}
+
+export const paymentStatus = {
+    PAID: 'paid',
+    UNPAID: 'unpaid',
+    REFUNDED: 'refunded'
+}
+
+export const orderStatus= {
+    PENDING: 'pending',
+    CONFIRMED: 'confirmed',
+    SHIPPED: 'shipped',
+    DELIVERED:'delivered',
+    CANCELLED: 'cancelled'
+}
