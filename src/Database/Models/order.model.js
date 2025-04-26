@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import * as constants from "../../Constants/constants.js";
 
 const orderDatabaseSchema = new mongoose.Schema({
-
     customerID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'customers',
@@ -10,7 +9,6 @@ const orderDatabaseSchema = new mongoose.Schema({
     },
 
     customerName: String,
-    
     customerPhone: String,
     products: [
         {
@@ -35,6 +33,22 @@ const orderDatabaseSchema = new mongoose.Schema({
             },
         }
     ],
+    subtotalPrice: {
+        type: Number,
+        default: 0 
+    },
+    shippingFee: {
+        type: Number,
+        default: 0 
+    },
+    discountPercentage: {
+        type: Number,
+        default: 0 
+    },
+    discountAmount: {
+        type: Number,
+        default: 0 
+    },
     totalPrice: {
         type: Number,
         default: 0
@@ -66,11 +80,11 @@ const orderDatabaseSchema = new mongoose.Schema({
     }
 }, {
     timestamps: true
-})
+});
 
 orderDatabaseSchema.pre('save', async function () {
     if (this.isModified('phone')) this.phone = encryption(this.phone, process.env.SECRET_KEY)
-})
+});
 
 const OrderModel = mongoose.models.orders || mongoose.model('orders', orderDatabaseSchema);
 

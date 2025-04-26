@@ -15,14 +15,26 @@ export const createOrderService = async (req, res) => {
 
     const orderProducts = cart.products
 
-    const orderTotalPrice = cart.totalPrice
+    const orderSubtotal = cart.totalPrice;
+
+    const shippingFee = req.body.shippingFee || 0;
+
+    const discountPercentage = req.body.discount || 0;
+
+    const discountAmount = (orderSubtotal * discountPercentage) / 100;
+
+    const finalTotal = orderSubtotal + shippingFee - discountAmount;
 
     const order = {
         customerID: customer._id,
         customerName,
         customerPhone: customer.phone,
         products: orderProducts,
-        totalPrice: orderTotalPrice,
+        discountAmount,
+        shippingFee,
+        discountPercentage,
+        subtotalPrice: orderSubtotal,
+        totalPrice: finalTotal,
         paymentMethod: req.body.paymentMethod,
         address: {
             addressID: address._id,
@@ -31,7 +43,7 @@ export const createOrderService = async (req, res) => {
             country: address.country
         }
     }
-
+    
     await CartModel.deleteOne({ customerID: customer._id })
 
     const createdOrder = await OrderModel.create(order);

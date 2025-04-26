@@ -1,6 +1,7 @@
 import ProductModel from "../Database/Models/product.model.js"
 import { globalErrorHandler } from "../Middlewares/errorHandler.middleware.js"
 import customerAddressRouters from "../Modules/Address/address.controller.js"
+import adminRoderRouters from "../Modules/Admin/admin.controller.js"
 import authAdminRouters from "../Modules/Auth/Admin/auth.controller.js"
 import customerAuthRouters from "../Modules/Auth/Customer/auth.customer.controller.js"
 import cartRouters from "../Modules/Cart/cart.controller.js"
@@ -23,6 +24,7 @@ const controllerHandler = (app) => {
     app.use('/admin/category', adminCategoryRouters)
     app.use('/admin/auth', authAdminRouters)
     app.use('/admin/product', productRouters)
+    app.use('/admin/order', adminRoderRouters)
 
     // Home Routers
     app.get('/', async (req, res) => {
