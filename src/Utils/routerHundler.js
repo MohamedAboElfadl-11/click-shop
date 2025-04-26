@@ -6,6 +6,7 @@ import authAdminRouters from "../Modules/Auth/Admin/auth.controller.js"
 import customerAuthRouters from "../Modules/Auth/Customer/auth.customer.controller.js"
 import cartRouters from "../Modules/Cart/cart.controller.js"
 import adminCategoryRouters from "../Modules/Category/category.controller.js"
+import favoriteRouters from "../Modules/Favorite/favorite.controller.js"
 import homeRouters from "../Modules/Home/home.controller.js"
 import orderRouters from "../Modules/Order/order.controller.js"
 import productRouters from "../Modules/Products/products.controller.js"
@@ -41,6 +42,8 @@ const controllerHandler = (app) => {
     // Order Routers
     app.use('/order', orderRouters)
 
+    // Favorite Routers
+    app.use('/favorite', favoriteRouters)
     
     app.use(globalErrorHandler)
 }

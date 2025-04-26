@@ -7,7 +7,6 @@ const orderDatabaseSchema = new mongoose.Schema({
         ref: 'customers',
         required: true,
     },
-
     customerName: String,
     customerPhone: String,
     products: [
