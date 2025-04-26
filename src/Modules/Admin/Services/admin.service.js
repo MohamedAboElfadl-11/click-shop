@@ -21,8 +21,6 @@ export const manageOrderService = async (req, res) => {
 
     if (!order) return res.status(404).json({ message: 'Order not found' })
 
-    console.log(order)
-
     if (req.body.orderStatus === orderStatus.CONFIRMED) {
 
         order.orderStatus = orderStatus.CONFIRMED
