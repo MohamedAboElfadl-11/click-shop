@@ -17,4 +17,8 @@ orderRouters.get('/get-orders',
     errorHandlerMiddleware(order.getOrdersService)
 )
 
+orderRouters.put('/cancel-order/:orderID',
+    errorHandlerMiddleware(order.cancelOrderService)
+)
+
 export default orderRouters

@@ -6,23 +6,18 @@ import orderInvoiceEmail from "../../../Templates/acceptOrder.template.js"
 import orderRejectedEmail from "../../../Templates/rejectOrder.template.js"
 
 export const manageOrderService = async (req, res) => {
-
     const { orderID } = req.params
 
     const order = await OrderModel.findById(orderID)
-
-    if (!order) return res.status(404).json({ message: 'Order not found' });
+    if (!order || order.orderStatus === orderStatus.CANCELLED)
+        return res.status(404).json({ message: 'Order not found or cancelled' });
 
     const customer = await CustomerModel.findById(order.customerID)
-
     if (!customer) return res.status(404).json({ message: 'Customer not found' });
 
     const customerEmail = customer.email
 
-    if (!order) return res.status(404).json({ message: 'Order not found' })
-
     if (req.body.orderStatus === orderStatus.CONFIRMED) {
-
         order.orderStatus = orderStatus.CONFIRMED
 
         await order.save()
