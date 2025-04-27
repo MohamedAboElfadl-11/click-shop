@@ -29,7 +29,20 @@ export const addToFavoriteService = async (req, res) => {
     res.status(200).json({ message: 'Product added to favorite list successfully', favoriteList });
 };
 
-// get favorite list 
+// get favorite list
+
+/**
+ * @swagger
+ * /favorite/list:
+ *   get:
+ *     summary: Get the list of favorite products
+ *     responses:
+ *       200:
+ *         description: List of favorite products
+ *       404:
+ *         description: No favorite products found
+ */
+
 export const listFavoriteService = async (req, res, next) => {
     const { _id } = req.loginUser;
 
